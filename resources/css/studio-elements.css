@@ -1,0 +1,295 @@
+.studio-context-menu {
+    position: fixed;
+    z-index: 500;
+    width: 238px;
+    max-height: calc(100dvh - 16px);
+    overflow: auto;
+    padding: 6px;
+    border: 1px solid #d9e4df;
+    border-radius: 12px;
+    background: #fffdf7;
+    box-shadow: 0 14px 45px #10261e30;
+    color: #17201e;
+    font-size: 13px;
+}
+.studio-context-menu p {
+    padding: 8px 10px;
+    color: #557269;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+.studio-context-menu button {
+    display: block;
+    width: 100%;
+    padding: 9px 10px;
+    border-radius: 6px;
+    text-align: left;
+}
+.studio-context-menu button:hover,
+.studio-context-menu button:focus-visible {
+    background: #e8f4ef;
+    outline: 2px solid #0f766e;
+    outline-offset: -2px;
+}
+.studio-context-menu button:disabled {
+    opacity: 0.45;
+}
+.canva-canvas-wrap {
+    position: relative;
+}
+.studio-selection-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 70;
+}
+.studio-selection-box {
+    position: absolute;
+    border: 1px solid #0f766e;
+    pointer-events: none;
+}
+.studio-move-handle,
+.studio-resize-handle {
+    position: absolute;
+    pointer-events: auto;
+    touch-action: none;
+    background: #fff;
+    border: 2px solid #0f766e;
+    border-radius: 6px;
+    color: #0f766e;
+}
+.studio-move-handle {
+    top: -31px;
+    left: calc(50% - 16px);
+    width: 32px;
+    height: 28px;
+    cursor: grab;
+    font-size: 20px;
+    line-height: 24px;
+}
+.studio-move-handle:active {
+    cursor: grabbing;
+}
+.studio-resize-handle {
+    right: -7px;
+    bottom: -7px;
+    width: 14px;
+    height: 14px;
+    cursor: nwse-resize;
+}
+.studio-color-input {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+.studio-color-input input[type="color"] {
+    width: 38px;
+    height: 34px;
+    min-width: 38px;
+    padding: 2px;
+    border: 1px solid #d9e4df;
+    border-radius: 7px;
+}
+.studio-color-input input[type="text"] {
+    flex: 1;
+    min-width: 90px;
+    width: 110px;
+    min-height: 34px;
+    border: 1px solid #d9e4df;
+    border-radius: 7px;
+    padding: 6px 8px;
+    font-family: ui-monospace, monospace;
+    font-size: 12px;
+    color: #17201e;
+    background: #fff;
+}
+.studio-color-input small {
+    flex-basis: 100%;
+    color: #b42318;
+    font-size: 11px;
+}
+.studio-element-controls {
+    display: grid;
+    gap: 14px;
+    color: #17201e;
+}
+.studio-element-controls h3 {
+    font-size: 16px;
+    font-weight: 700;
+}
+.studio-element-controls p {
+    font-size: 12px;
+    color: #557269;
+    line-height: 1.6;
+}
+.studio-measurements {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+.studio-element-controls label {
+    display: grid;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.studio-measurements input,
+.studio-element-controls input[type="number"] {
+    width: 100%;
+    min-width: 0;
+    padding: 8px;
+    border: 1px solid #d9e4df;
+    border-radius: 6px;
+}
+.studio-order-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.studio-order-actions button {
+    padding: 8px;
+    border: 1px solid #d9e4df;
+    border-radius: 6px;
+    font-size: 11px;
+}
+.studio-shape-choices {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+}
+.studio-shape-choices button {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    padding: 10px 4px;
+    border: 1px solid #d9e4df;
+    border-radius: 7px;
+    font-size: 10px;
+    text-transform: capitalize;
+}
+.studio-shape-choices button[aria-pressed="true"] {
+    border-color: #0f766e;
+    background: #e8f4ef;
+}
+.studio-shape-icon {
+    display: block;
+    width: 28px;
+    height: 28px;
+    background: #0f766e;
+}
+.shape-rounded {
+    border-radius: 7px;
+}
+.shape-circle {
+    border-radius: 50%;
+}
+.shape-triangle {
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.shape-star {
+    clip-path: polygon(
+        50% 0,
+        61% 35%,
+        98% 35%,
+        68% 57%,
+        79% 91%,
+        50% 70%,
+        21% 91%,
+        32% 57%,
+        2% 35%,
+        39% 35%
+    );
+}
+.shape-diamond {
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+.shape-line {
+    height: 4px;
+    margin: 12px 0;
+}
+.shape-arch {
+    border-radius: 50% 50% 0 0;
+}
+.studio-free-elements {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #d9e4df;
+}
+.studio-free-elements h3 {
+    font-size: 14px;
+    font-weight: 700;
+}
+.studio-free-element-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+.studio-free-element-buttons button {
+    padding: 12px;
+    border: 1px solid #d9e4df;
+    border-radius: 8px;
+    background: #fffdf7;
+    font-size: 12px;
+}
+.studio-link-controls {
+    display: grid;
+    gap: 12px;
+}
+.studio-link-controls h3 {
+    font-size: 16px;
+    font-weight: 700;
+}
+.studio-link-controls input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d9e4df;
+    border-radius: 7px;
+    font-size: 13px;
+}
+.studio-link-controls p {
+    color: #557269;
+    line-height: 1.6;
+    font-size: 12px;
+}
+.studio-link-controls button {
+    padding: 8px 12px;
+    border: 1px solid #d9e4df;
+    border-radius: 6px;
+}
+.studio-history {
+    display: flex;
+    gap: 4px;
+}
+.studio-history button {
+    padding: 6px 8px;
+    color: inherit;
+}
+.studio-history button:disabled {
+    opacity: 0.4;
+}
+.studio-property-extra {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+.studio-property-extra button {
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+.studio-property-extra button[aria-expanded="true"] {
+    background: #e8f4ef;
+    color: #0f766e;
+}
+@media (max-width: 700px) {
+    .studio-property-extra {
+        flex-wrap: wrap;
+    }
+    .studio-shape-choices {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}

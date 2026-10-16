@@ -1,0 +1,2149 @@
+/*
+ * Nirmaan visual studio
+ *
+ * This file owns editor chrome only. Customer website composition remains in
+ * templates.css so the canvas and the published website continue to match.
+ */
+
+:where(.ns-wix-shell, .ns-wix-studio) {
+    --ns-wix-blue: #116dff;
+    --ns-wix-blue-hover: #0d5bd7;
+    --ns-wix-blue-soft: #e7f0ff;
+    --ns-wix-ink: #202124;
+    --ns-wix-muted: #687078;
+    --ns-wix-line: #dfe2e6;
+    --ns-wix-line-strong: #c9cdd3;
+    --ns-wix-panel: #ffffff;
+    --ns-wix-stage: #e8eaed;
+    --ns-wix-topbar: #17181b;
+    --ns-wix-topbar-muted: #aeb4bd;
+    --ns-wix-danger: #d92d20;
+    --ns-wix-success: #168467;
+    --ns-wix-topbar-height: 48px;
+    --ns-wix-rail-width: 48px;
+    --ns-wix-sidebar-width: 300px;
+    --ns-wix-inspector-width: 300px;
+    --ns-wix-status-height: 26px;
+    --ns-wix-canvas-width: 1200px;
+    --ns-wix-zoom: 1;
+    isolation: isolate;
+    display: grid;
+    width: 100%;
+    height: 100dvh;
+    min-height: 640px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows:
+        var(--ns-wix-topbar-height) minmax(0, 1fr)
+        var(--ns-wix-status-height);
+    overflow: hidden;
+    color: var(--ns-wix-ink);
+    background: var(--ns-wix-stage);
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+:where(.ns-wix-shell, .ns-wix-studio),
+:where(.ns-wix-shell, .ns-wix-studio) *,
+:where(.ns-wix-shell, .ns-wix-studio) *::before,
+:where(.ns-wix-shell, .ns-wix-studio) *::after {
+    box-sizing: border-box;
+}
+
+/* Command bar ----------------------------------------------------------- */
+
+.ns-wix-topbar {
+    position: relative;
+    z-index: 100;
+    display: grid;
+    height: var(--ns-wix-topbar-height);
+    grid-template-columns: minmax(260px, 1fr) auto minmax(260px, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 0 10px;
+    border-bottom: 1px solid #090a0c;
+    color: #f7f8fa;
+    background: var(--ns-wix-topbar);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 5%);
+    user-select: none;
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.ns-wix-topbar__left,
+.ns-wix-topbar__center,
+.ns-wix-topbar__right {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 6px;
+}
+
+.ns-wix-topbar__center {
+    justify-content: center;
+}
+
+.ns-wix-topbar__right {
+    justify-content: flex-end;
+}
+
+.ns-wix-shell > .flash-message,
+.ns-wix-studio > .flash-message {
+    top: calc(var(--ns-wix-topbar-height) + 12px);
+    right: 16px;
+    z-index: 140;
+    max-width: min(420px, calc(100vw - 32px));
+    border-radius: 7px;
+    font-size: 11px;
+    box-shadow: 0 10px 30px rgb(20 27 38 / 24%);
+}
+
+.ns-wix-topbar button,
+.ns-wix-topbar a,
+.ns-wix-brand-button,
+.ns-wix-page-picker,
+.ns-wix-breakpoints button,
+.ns-wix-zoom button {
+    min-height: 30px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: inherit;
+    background: transparent;
+    font: inherit;
+    text-decoration: none;
+    transition:
+        color 120ms ease,
+        border-color 120ms ease,
+        background-color 120ms ease,
+        box-shadow 120ms ease;
+}
+
+.ns-wix-topbar button:not(:disabled):hover,
+.ns-wix-topbar a:hover,
+.ns-wix-brand-button:hover,
+.ns-wix-page-picker:hover,
+.ns-wix-breakpoints button:hover,
+.ns-wix-zoom button:hover {
+    background: rgb(255 255 255 / 10%);
+}
+
+.ns-wix-topbar button:disabled {
+    color: #737982;
+    cursor: not-allowed;
+}
+
+.ns-wix-brand-button {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: white;
+    background: var(--ns-wix-blue);
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+}
+
+.ns-wix-brand-button:hover {
+    background: #2a7aff;
+}
+
+.ns-wix-brand-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+.ns-wix-brand-mark {
+    display: none;
+}
+
+.ns-wix-site-name {
+    display: grid;
+    min-width: 0;
+    max-width: 220px;
+    padding: 0 8px;
+    line-height: 1.15;
+}
+
+.ns-wix-site-name strong,
+.ns-wix-site-name b {
+    overflow: hidden;
+    color: #f7f8fa;
+    font-size: 12px;
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ns-wix-site-name span,
+.ns-wix-site-name small {
+    overflow: hidden;
+    color: var(--ns-wix-topbar-muted);
+    font-size: 9px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ns-wix-page-picker {
+    display: inline-flex;
+    min-width: 124px;
+    max-width: 210px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 9px;
+    border-color: rgb(255 255 255 / 12%);
+    color: #f2f3f5;
+    font-size: 11px;
+}
+
+.ns-wix-page-picker::after {
+    width: 6px;
+    height: 6px;
+    flex: none;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    content: "";
+    transform: rotate(45deg) translateY(-2px);
+}
+
+.ns-wix-page-picker > svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+    color: #aeb4bd;
+}
+
+.ns-wix-page-picker select {
+    width: 100%;
+    min-width: 0;
+    height: 28px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    outline: 0;
+    color: #f2f3f5;
+    background: transparent;
+    font: inherit;
+    font-size: 11px;
+    text-overflow: ellipsis;
+    appearance: none;
+}
+
+.ns-wix-page-picker select option {
+    color: #202124;
+    background: white;
+}
+
+.ns-wix-save-state {
+    display: inline-flex;
+    min-width: 58px;
+    align-items: center;
+    gap: 6px;
+    padding: 0 6px;
+    color: var(--ns-wix-topbar-muted);
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.ns-wix-save-state::before {
+    width: 6px;
+    height: 6px;
+    flex: none;
+    border-radius: 50%;
+    background: #78808a;
+    content: "";
+}
+
+.ns-wix-save-state > i {
+    display: none;
+}
+
+.ns-wix-save-state.is-dirty::before {
+    background: #f6b73c;
+}
+
+.ns-wix-save-state.is-saving::before {
+    border: 1.5px solid rgb(255 255 255 / 30%);
+    border-top-color: white;
+    background: transparent;
+    animation: ns-wix-spin 700ms linear infinite;
+}
+
+.ns-wix-save-state.is-saved::before {
+    background: #48cfa3;
+    box-shadow: 0 0 0 3px rgb(72 207 163 / 12%);
+}
+
+.ns-wix-breakpoints,
+.ns-wix-zoom {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px;
+    border: 1px solid rgb(255 255 255 / 10%);
+    border-radius: 7px;
+    background: rgb(255 255 255 / 4%);
+}
+
+.ns-wix-zoom output {
+    min-width: 38px;
+    color: #e8eaed;
+    font-size: 9px;
+    text-align: center;
+}
+
+.ns-wix-breakpoints button,
+.ns-wix-zoom button {
+    display: inline-flex;
+    min-width: 28px;
+    min-height: 24px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 7px;
+    border-radius: 4px;
+    color: #b8bdc5;
+    font-size: 10px;
+}
+
+.ns-wix-breakpoints button.is-active,
+.ns-wix-breakpoints button.active,
+.ns-wix-breakpoints button[aria-pressed="true"],
+.ns-wix-zoom button.is-active {
+    color: white;
+    background: rgb(255 255 255 / 16%);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 7%);
+}
+
+.ns-wix-topbar .button,
+.ns-wix-topbar [data-variant="primary"] {
+    min-height: 30px;
+    padding: 0 13px;
+    border: 1px solid rgb(255 255 255 / 15%);
+    border-radius: 6px;
+    color: white;
+    background: rgb(255 255 255 / 7%);
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.ns-wix-topbar .button-dark,
+.ns-wix-topbar .button-primary,
+.ns-wix-topbar [data-variant="publish"] {
+    border-color: var(--ns-wix-blue);
+    background: var(--ns-wix-blue);
+}
+
+.ns-wix-topbar .button-dark:hover,
+.ns-wix-topbar .button-primary:hover,
+.ns-wix-topbar [data-variant="publish"]:hover {
+    border-color: #3984ff;
+    background: #3984ff;
+}
+
+.ns-wix-command,
+.ns-wix-publish {
+    display: inline-flex;
+    min-height: 30px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 10px;
+    border: 1px solid rgb(255 255 255 / 13%);
+    border-radius: 6px;
+    color: #f3f4f6;
+    background: rgb(255 255 255 / 6%);
+    font-size: 10px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.ns-wix-command svg {
+    width: 14px;
+    height: 14px;
+}
+
+.ns-wix-command:hover {
+    border-color: rgb(255 255 255 / 20%);
+    background: rgb(255 255 255 / 12%);
+}
+
+.ns-wix-command--quiet {
+    border-color: transparent;
+    color: #bac0c8;
+    background: transparent;
+}
+
+.ns-wix-publish {
+    min-width: 72px;
+    border-color: var(--ns-wix-blue);
+    color: white;
+    background: var(--ns-wix-blue);
+}
+
+.ns-wix-publish:not(:disabled):hover {
+    border-color: #3984ff;
+    background: #3984ff;
+}
+
+/* Main editor frame ----------------------------------------------------- */
+
+.ns-wix-body {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    grid-template-columns:
+        var(--ns-wix-rail-width) var(--ns-wix-sidebar-width)
+        minmax(320px, 1fr) var(--ns-wix-inspector-width);
+    grid-column: 1;
+    grid-row: 2;
+    grid-template-rows: minmax(0, 1fr);
+    overflow: hidden;
+}
+
+/* Left tool rail -------------------------------------------------------- */
+
+.ns-wix-tool-rail {
+    position: relative;
+    z-index: 40;
+    display: flex;
+    min-width: 0;
+    grid-column: 1;
+    grid-row: 1;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 4px;
+    border-right: 1px solid var(--ns-wix-line);
+    background: var(--ns-wix-panel);
+    box-shadow: 1px 0 8px rgb(25 32 43 / 4%);
+}
+
+.ns-wix-tool-rail::after {
+    width: 24px;
+    height: 1px;
+    margin: 4px 0;
+    background: var(--ns-wix-line);
+    content: "";
+    order: 20;
+}
+
+.ns-wix-tool-button {
+    position: relative;
+    display: grid;
+    width: 40px;
+    min-height: 40px;
+    flex: none;
+    place-items: center;
+    padding: 3px 2px;
+    border: 0;
+    border-radius: 7px;
+    color: #525960;
+    background: transparent;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.05;
+    text-align: center;
+    transition:
+        color 120ms ease,
+        background-color 120ms ease,
+        transform 120ms ease;
+}
+
+.ns-wix-tool-button:hover {
+    color: var(--ns-wix-blue);
+    background: #f0f5ff;
+}
+
+.ns-wix-tool-button:active {
+    transform: translateY(1px);
+}
+
+.ns-wix-tool-button.is-active,
+.ns-wix-tool-button[aria-pressed="true"],
+.ns-wix-tool-button[aria-selected="true"] {
+    color: #075ed8;
+    background: var(--ns-wix-blue-soft);
+}
+
+.ns-wix-tool-button.is-active::before,
+.ns-wix-tool-button[aria-pressed="true"]::before,
+.ns-wix-tool-button[aria-selected="true"]::before {
+    position: absolute;
+    inset: 6px auto 6px -4px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: var(--ns-wix-blue);
+    content: "";
+}
+
+.ns-wix-tool-button svg {
+    width: 17px;
+    height: 17px;
+    stroke-width: 1.75;
+}
+
+.ns-wix-tool-button > span:last-child:not(:first-child) {
+    max-width: 38px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Flyout and inspector panels ------------------------------------------ */
+
+.ns-wix-sidebar,
+.ns-wix-inspector {
+    position: relative;
+    z-index: 35;
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    grid-template-rows: auto minmax(0, 1fr);
+    background: var(--ns-wix-panel);
+}
+
+.ns-wix-sidebar {
+    grid-column: 2;
+    grid-row: 1;
+    border-right: 1px solid var(--ns-wix-line);
+    box-shadow: 4px 0 14px rgb(25 32 43 / 5%);
+}
+
+.ns-wix-inspector {
+    grid-column: 4;
+    grid-row: 1;
+    border-left: 1px solid var(--ns-wix-line);
+    box-shadow: -4px 0 14px rgb(25 32 43 / 4%);
+}
+
+.ns-wix-sidebar__header,
+.ns-wix-inspector__header {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--ns-wix-line);
+    background: #fbfbfc;
+}
+
+.ns-wix-sidebar__header h2,
+.ns-wix-sidebar__header h3,
+.ns-wix-sidebar__header h1,
+.ns-wix-inspector__header h2,
+.ns-wix-inspector__header h3 {
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    color: #292c31;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ns-wix-sidebar__header > div,
+.ns-wix-inspector__header > div {
+    display: grid;
+    min-width: 0;
+    gap: 1px;
+}
+
+.ns-wix-sidebar__header > div > span,
+.ns-wix-inspector__header > div > span {
+    color: #858c95;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.ns-wix-sidebar__header button,
+.ns-wix-inspector__header button {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    flex: none;
+    place-items: center;
+    border: 0;
+    border-radius: 5px;
+    color: #5e646b;
+    background: transparent;
+}
+
+.ns-wix-sidebar__header button:hover,
+.ns-wix-inspector__header button:hover {
+    color: var(--ns-wix-blue);
+    background: var(--ns-wix-blue-soft);
+}
+
+.ns-wix-sidebar__close {
+    display: none !important;
+}
+
+.ns-wix-sidebar__body,
+.ns-wix-inspector__body {
+    min-width: 0;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-color: #bcc2ca transparent;
+    scrollbar-width: thin;
+}
+
+.ns-wix-sidebar__body {
+    padding: 0;
+}
+
+.ns-wix-inspector__body {
+    padding: 14px;
+}
+
+.ns-wix-sidebar__body::-webkit-scrollbar,
+.ns-wix-inspector__body::-webkit-scrollbar,
+.ns-wix-canvas-stage::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.ns-wix-sidebar__body::-webkit-scrollbar-thumb,
+.ns-wix-inspector__body::-webkit-scrollbar-thumb,
+.ns-wix-canvas-stage::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background: #aeb4bc;
+    background-clip: padding-box;
+}
+
+.ns-wix-sidebar__body::-webkit-scrollbar-thumb:hover,
+.ns-wix-inspector__body::-webkit-scrollbar-thumb:hover,
+.ns-wix-canvas-stage::-webkit-scrollbar-thumb:hover {
+    background: #8d949d;
+    background-clip: padding-box;
+}
+
+/* Existing studio controls nested inside the new panels. */
+.ns-wix-sidebar.ns-studio-sidebar,
+.ns-wix-sidebar.studio-sidebar {
+    position: relative;
+    top: auto;
+    width: auto;
+    height: auto;
+    padding: 0;
+    overflow: hidden;
+    border-right: 1px solid var(--ns-wix-line);
+}
+
+.ns-wix-sidebar .ns-studio-tabs {
+    margin: 10px;
+    padding: 3px;
+    border: 1px solid #e2e5e9;
+    border-radius: 7px;
+    background: #f1f2f4;
+}
+
+.ns-wix-sidebar .ns-studio-tabs button {
+    min-height: 29px;
+    padding: 5px 4px;
+    border-radius: 5px;
+    font-size: 9px;
+}
+
+.ns-wix-sidebar .ns-studio-tabs button.active {
+    border-color: #d7dbe0;
+    color: #075ed8;
+    box-shadow: 0 1px 4px rgb(20 27 38 / 9%);
+}
+
+.ns-wix-sidebar .ns-studio-panel {
+    padding: 14px 14px 20px;
+}
+
+.ns-wix-sidebar .ns-studio-readonly {
+    margin: 12px 14px 0;
+}
+
+.ns-wix-sidebar .sidebar-title {
+    margin: 2px 0 9px;
+    color: #4e545b;
+    font-size: 10px;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+}
+
+.ns-wix-sidebar .sidebar-title button {
+    display: grid;
+    width: 22px;
+    height: 22px;
+    place-items: center;
+    border-radius: 5px;
+    color: white;
+    background: var(--ns-wix-blue);
+    font-size: 14px;
+}
+
+.ns-wix-sidebar .page-row {
+    min-height: 36px;
+    margin-bottom: 2px;
+    padding: 8px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    color: #4c535b;
+    font-size: 11px;
+}
+
+.ns-wix-sidebar .page-row:first-of-type {
+    color: inherit;
+    background: transparent;
+}
+
+.ns-wix-sidebar .page-row:hover {
+    background: #f1f5fb;
+}
+
+.ns-wix-sidebar .page-row.selected,
+.ns-wix-sidebar .page-row[aria-pressed="true"] {
+    border-color: #c9dcff;
+    color: #075ed8;
+    background: var(--ns-wix-blue-soft);
+}
+
+.ns-wix-sidebar .page-dot {
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+}
+
+.ns-wix-sidebar .sidebar-divider {
+    margin: 16px 0;
+    background: var(--ns-wix-line);
+}
+
+.ns-wix-sidebar :is(input, textarea, select),
+.ns-wix-inspector :is(input, textarea, select) {
+    width: 100%;
+    border: 1px solid var(--ns-wix-line-strong);
+    border-radius: 5px;
+    color: #2d3136;
+    background: white;
+    font: inherit;
+    font-size: 11px;
+    box-shadow: 0 1px 1px rgb(20 27 38 / 3%);
+}
+
+.ns-wix-sidebar :is(input, select),
+.ns-wix-inspector :is(input, select) {
+    min-height: 34px;
+    padding: 7px 9px;
+}
+
+.ns-wix-sidebar textarea,
+.ns-wix-inspector textarea {
+    min-height: 78px;
+    padding: 8px 9px;
+    line-height: 1.45;
+    resize: vertical;
+}
+
+.ns-wix-sidebar label,
+.ns-wix-inspector label {
+    color: #4e555d;
+    font-size: 10px;
+    font-weight: 650;
+}
+
+.ns-wix-sidebar .button,
+.ns-wix-inspector .button {
+    min-height: 34px;
+    border-radius: 5px;
+    font-size: 10px;
+}
+
+.ns-wix-sidebar .button-dark,
+.ns-wix-inspector .button-dark {
+    color: white;
+    background: var(--ns-wix-blue);
+}
+
+.ns-wix-inspector__body > section,
+.ns-wix-inspector__body > form > section,
+.ns-wix-inspector__body .inspector-group {
+    margin: 0 -14px;
+    padding: 14px;
+    border-bottom: 1px solid var(--ns-wix-line);
+}
+
+.ns-wix-inspector__body > section:first-child,
+.ns-wix-inspector__body > form > section:first-child {
+    padding-top: 2px;
+}
+
+/* Structured-section library. */
+.ns-wix-sidebar .ns-studio-panel-heading {
+    display: grid;
+    gap: 5px;
+    margin-bottom: 14px;
+}
+
+.ns-wix-sidebar .ns-studio-panel-heading .eyebrow {
+    margin: 0;
+    color: #69717a;
+    font-size: 8px;
+    letter-spacing: 0.095em;
+}
+
+.ns-wix-sidebar .ns-studio-panel-heading h2 {
+    margin: 0;
+    color: #292d33;
+    font-size: 16px;
+    font-weight: 720;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+}
+
+.ns-wix-sidebar .ns-studio-panel-heading > p:last-child {
+    margin: 1px 0 0;
+    color: #747b84;
+    font-size: 10px;
+    line-height: 1.45;
+}
+
+.theme-contrast-status {
+    display: grid;
+    gap: 3px;
+    padding: 10px;
+    border: 1px solid #b7c0c9;
+    border-radius: 7px;
+    color: #35404b;
+    background: #f7f9fb;
+    font-size: 10px;
+    line-height: 1.45;
+}
+.theme-contrast-status strong {
+    font-size: 11px;
+}
+.theme-contrast-status.passes {
+    border-color: #72ad91;
+    color: #0b5b3f;
+    background: #eef9f3;
+}
+.theme-contrast-status.fails {
+    border-color: #dc8178;
+    color: #8f2018;
+    background: #fff3f1;
+}
+
+.ns-wix-section-library {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+    margin-bottom: 10px;
+}
+
+.ns-wix-section-library > button:not(.ns-wix-add-section) {
+    display: flex;
+    min-width: 0;
+    min-height: 66px;
+    align-items: center;
+    gap: 8px;
+    padding: 9px;
+    border: 1px solid var(--ns-wix-line);
+    border-radius: 7px;
+    color: #3f454c;
+    background: #fbfbfc;
+    text-align: left;
+    transition:
+        border-color 120ms ease,
+        background-color 120ms ease,
+        box-shadow 120ms ease,
+        transform 120ms ease;
+}
+
+.ns-wix-section-library > button:not(.ns-wix-add-section):hover {
+    border-color: #a9c8ff;
+    background: #f5f8ff;
+    box-shadow: 0 3px 10px rgb(20 27 38 / 6%);
+    transform: translateY(-1px);
+}
+
+.ns-wix-section-library > button.is-selected,
+.ns-wix-section-library > button[aria-pressed="true"] {
+    border-color: var(--ns-wix-blue);
+    color: #075ed8;
+    background: var(--ns-wix-blue-soft);
+    box-shadow: inset 0 0 0 1px var(--ns-wix-blue);
+}
+
+.ns-wix-section-library > button > svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+}
+
+.ns-wix-section-library > button > span {
+    display: grid;
+    min-width: 0;
+    gap: 2px;
+}
+
+.ns-wix-section-library > button b {
+    overflow: hidden;
+    font-size: 10px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ns-wix-section-library > button small {
+    overflow: hidden;
+    color: #858c94;
+    font-size: 8px;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ns-wix-section-library .ns-wix-add-section {
+    min-height: 35px;
+    grid-column: 1 / -1;
+    justify-content: center;
+    border-color: var(--ns-wix-blue);
+    color: white;
+    background: var(--ns-wix-blue);
+}
+
+.ns-wix-section-library .ns-wix-add-section:hover {
+    background: var(--ns-wix-blue-hover);
+}
+
+/* Layers panel. */
+.ns-wix-layer-list {
+    display: grid;
+    gap: 5px;
+}
+
+.ns-wix-layer-row {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    border: 1px solid var(--ns-wix-line);
+    border-radius: 6px;
+    background: white;
+    transition:
+        border-color 120ms ease,
+        background-color 120ms ease;
+}
+
+.ns-wix-layer-row:hover {
+    border-color: #b8c2cf;
+    background: #fafbfc;
+}
+
+.ns-wix-layer-row.is-selected {
+    border-color: #80adff;
+    background: var(--ns-wix-blue-soft);
+    box-shadow: inset 3px 0 var(--ns-wix-blue);
+}
+
+.ns-wix-layer-row.is-hidden {
+    opacity: 0.55;
+}
+
+.ns-wix-layer-select {
+    display: flex;
+    min-width: 0;
+    min-height: 45px;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 7px;
+    border: 0;
+    color: #454b52;
+    background: transparent;
+    text-align: left;
+}
+
+.ns-wix-layer-select > svg {
+    width: 15px;
+    height: 15px;
+    flex: none;
+    color: #727a83;
+}
+
+.ns-wix-layer-select > span {
+    display: grid;
+    min-width: 0;
+    gap: 1px;
+}
+
+.ns-wix-layer-select b,
+.ns-wix-layer-select small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ns-wix-layer-select b {
+    font-size: 9px;
+    font-weight: 650;
+}
+
+.ns-wix-layer-select small {
+    color: #858c94;
+    font-size: 8px;
+    text-transform: capitalize;
+}
+
+.ns-wix-layer-actions {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    padding-right: 4px;
+}
+
+.ns-wix-layer-actions button {
+    display: grid;
+    width: 24px;
+    height: 27px;
+    place-items: center;
+    border: 0;
+    border-radius: 4px;
+    color: #5e666f;
+    background: transparent;
+    font-size: 11px;
+}
+
+.ns-wix-layer-actions button:not(:disabled):hover {
+    color: #075ed8;
+    background: #d9e8ff;
+}
+
+.ns-wix-layer-actions button:disabled {
+    opacity: 0.28;
+    cursor: not-allowed;
+}
+
+/* Content navigator. */
+.ns-wix-content-summary {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 11px;
+    padding: 12px;
+    border: 1px solid #cfddf3;
+    border-radius: 7px;
+    background: #f7faff;
+}
+
+.ns-wix-content-summary > span {
+    color: #075ed8;
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.ns-wix-content-summary > small,
+.ns-wix-content-summary > p {
+    margin: 0;
+    color: #687078;
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+.ns-wix-content-summary .button {
+    margin-top: 3px;
+}
+
+.ns-wix-content-list {
+    display: grid;
+    gap: 5px;
+    margin-bottom: 11px;
+}
+
+.ns-wix-content-list > button {
+    display: grid;
+    min-width: 0;
+    gap: 3px;
+    padding: 9px 10px;
+    border: 1px solid var(--ns-wix-line);
+    border-radius: 6px;
+    color: #30353b;
+    background: #fbfbfc;
+    text-align: left;
+}
+
+.ns-wix-content-list > button:hover {
+    border-color: #9fc0f8;
+    background: #f5f8ff;
+}
+
+.ns-wix-content-list span {
+    color: #747c85;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.ns-wix-content-list b {
+    overflow: hidden;
+    font-size: 10px;
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Selection inspector. */
+.ns-wix-inspector__body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ns-wix-inspector-card {
+    display: grid;
+    gap: 4px;
+    padding: 12px;
+    border: 1px solid var(--ns-wix-line);
+    border-radius: 7px;
+    background: linear-gradient(145deg, #fbfcfe, #f4f6f9);
+}
+
+.ns-wix-inspector-card > span {
+    color: #737b84;
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.ns-wix-inspector-card > strong {
+    overflow-wrap: anywhere;
+    color: #2d3238;
+    font-size: 13px;
+    font-weight: 720;
+    line-height: 1.25;
+}
+
+.ns-wix-inspector-card > small {
+    color: #7b838c;
+    font-size: 9px;
+}
+
+.ns-wix-inspector-toggle {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 10px;
+    border: 1px solid var(--ns-wix-line);
+    border-radius: 7px;
+    background: white;
+    cursor: pointer;
+}
+
+.ns-wix-inspector-toggle > span {
+    display: grid;
+    min-width: 0;
+    gap: 2px;
+}
+
+.ns-wix-inspector-toggle b {
+    color: #3e444b;
+    font-size: 10px;
+}
+
+.ns-wix-inspector-toggle small {
+    color: #7c848d;
+    font-size: 8px;
+    font-weight: 500;
+}
+
+.ns-wix-inspector .ns-wix-inspector-toggle input[type="checkbox"] {
+    position: relative;
+    width: 32px;
+    min-width: 32px;
+    height: 18px;
+    min-height: 18px;
+    flex: none;
+    padding: 0;
+    border: 0;
+    border-radius: 99px;
+    background: #b5bbc3;
+    box-shadow: none;
+    cursor: pointer;
+    appearance: none;
+}
+
+.ns-wix-inspector .ns-wix-inspector-toggle input[type="checkbox"]::after {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 1px 3px rgb(20 27 38 / 28%);
+    content: "";
+    transition: transform 140ms ease;
+}
+
+.ns-wix-inspector .ns-wix-inspector-toggle input[type="checkbox"]:checked {
+    background: var(--ns-wix-blue);
+}
+
+.ns-wix-inspector
+    .ns-wix-inspector-toggle
+    input[type="checkbox"]:checked::after {
+    transform: translateX(14px);
+}
+
+.ns-wix-inspector-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.ns-wix-inspector-actions button {
+    min-height: 32px;
+    padding: 0 7px;
+    border: 1px solid var(--ns-wix-line-strong);
+    border-radius: 5px;
+    color: #4d555d;
+    background: white;
+    font-size: 9px;
+    font-weight: 650;
+}
+
+.ns-wix-inspector-actions button:not(:disabled):hover {
+    border-color: #9fc0f8;
+    color: #075ed8;
+    background: #f5f8ff;
+}
+
+.ns-wix-inspector-actions button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.ns-wix-inspector-link {
+    display: flex;
+    width: 100%;
+    min-height: 34px;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 9px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    color: #424950;
+    background: transparent;
+    font-size: 10px;
+    font-weight: 620;
+    text-align: left;
+}
+
+.ns-wix-inspector-link svg {
+    width: 15px;
+    height: 15px;
+    flex: none;
+    color: #737b84;
+}
+
+.ns-wix-inspector-link:hover {
+    border-color: #d8e5fa;
+    color: #075ed8;
+    background: #f4f8ff;
+}
+
+.ns-wix-inspector-link.is-danger {
+    color: var(--ns-wix-danger);
+}
+
+.ns-wix-inspector-link.is-danger:hover {
+    border-color: #ffd1cd;
+    color: #b42318;
+    background: #fff3f2;
+}
+
+.ns-wix-inspector-colors {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.ns-wix-inspector-colors label {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) 24px;
+    align-items: center;
+    gap: 6px;
+    padding: 7px;
+    border: 1px solid var(--ns-wix-line);
+    border-radius: 6px;
+    background: #fafbfc;
+    text-transform: capitalize;
+}
+
+.ns-wix-inspector .ns-wix-inspector-colors input[type="color"] {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    min-height: 24px;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #bec4cc;
+    border-radius: 5px;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.ns-wix-inspector-colors input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.ns-wix-inspector-colors input[type="color"]::-webkit-color-swatch {
+    border: 0;
+}
+
+.ns-wix-inspector-stats {
+    display: grid;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--ns-wix-line);
+    border-radius: 7px;
+}
+
+.ns-wix-inspector-stats > div {
+    display: flex;
+    min-height: 34px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 9px;
+    border-top: 1px solid var(--ns-wix-line);
+}
+
+.ns-wix-inspector-stats > div:first-child {
+    border-top: 0;
+}
+
+.ns-wix-inspector-stats dt {
+    color: #747c85;
+    font-size: 9px;
+}
+
+.ns-wix-inspector-stats dd {
+    margin: 0;
+    color: #343a40;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+/* Workspace and infinite canvas ---------------------------------------- */
+
+.ns-wix-workspace {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    grid-column: 3;
+    grid-row: 1;
+    grid-template-rows: minmax(0, 1fr);
+    overflow: hidden;
+    background: var(--ns-wix-stage);
+}
+
+.ns-wix-canvas-stage {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+    min-height: 0;
+    padding: 52px clamp(32px, 4vw, 64px);
+    overflow: auto;
+    overscroll-behavior: contain;
+    background-color: var(--ns-wix-stage);
+    background-image:
+        radial-gradient(
+            circle,
+            rgb(94 101 111 / 28%) 0.75px,
+            transparent 0.9px
+        ),
+        linear-gradient(rgb(255 255 255 / 24%) 1px, transparent 1px),
+        linear-gradient(90deg, rgb(255 255 255 / 24%) 1px, transparent 1px);
+    background-position:
+        -1px -1px,
+        -1px -1px,
+        -1px -1px;
+    background-size:
+        16px 16px,
+        80px 80px,
+        80px 80px;
+    scrollbar-color: #969da6 #dfe2e5;
+}
+
+.ns-wix-canvas-stage::before {
+    position: fixed;
+    z-index: -1;
+    width: 42vw;
+    height: 42vw;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgb(255 255 255 / 38%),
+        transparent 68%
+    );
+    content: "";
+    pointer-events: none;
+    transform: translate(-18%, -35%);
+}
+
+.ns-wix-canvas-stage:has(.ns-wix-artboard--desktop) {
+    --ns-wix-canvas-width: 1200px;
+}
+
+.ns-wix-canvas-stage:has(.ns-wix-artboard--tablet) {
+    --ns-wix-canvas-width: 768px;
+}
+
+.ns-wix-canvas-stage:has(.ns-wix-artboard--mobile) {
+    --ns-wix-canvas-width: 390px;
+}
+
+.ns-wix-canvas-scaler {
+    position: relative;
+    width: max-content;
+    min-width: var(--ns-wix-canvas-width);
+    min-height: 100%;
+    margin: 0 auto;
+    zoom: var(--ns-wix-zoom);
+    transform-origin: top center;
+}
+
+@supports not (zoom: 1) {
+    .ns-wix-canvas-scaler {
+        transform: scale(var(--ns-wix-zoom));
+    }
+}
+
+.ns-wix-artboard {
+    position: relative;
+    width: var(--ns-wix-canvas-width);
+    min-height: 720px;
+    margin: 0 auto 80px;
+    overflow: visible;
+    border: 1px solid #c8ccd2;
+    background: white;
+    box-shadow:
+        0 1px 2px rgb(20 27 38 / 18%),
+        0 18px 50px rgb(20 27 38 / 16%);
+    transform-origin: top center;
+    transition:
+        width 220ms cubic-bezier(0.2, 0, 0, 1),
+        box-shadow 160ms ease;
+}
+
+.ns-wix-artboard.desktop {
+    --ns-wix-canvas-width: 1200px;
+}
+
+.ns-wix-artboard.tablet {
+    --ns-wix-canvas-width: 768px;
+}
+
+.ns-wix-artboard.mobile {
+    --ns-wix-canvas-width: 390px;
+}
+
+.ns-wix-artboard::before,
+.ns-wix-artboard::after {
+    position: absolute;
+    z-index: 8;
+    top: 50%;
+    width: 9px;
+    height: 38px;
+    border: 1px solid #9ba2ac;
+    border-radius: 5px;
+    background:
+        radial-gradient(circle, #727984 1px, transparent 1.3px) center / 3px 6px,
+        white;
+    box-shadow: 0 2px 7px rgb(20 27 38 / 16%);
+    content: "";
+    pointer-events: none;
+    transform: translateY(-50%);
+}
+
+.ns-wix-artboard::before {
+    left: -6px;
+}
+
+.ns-wix-artboard::after {
+    right: -6px;
+}
+
+.ns-wix-artboard.canvas,
+.ns-wix-artboard > .canvas,
+.ns-wix-artboard .canvas {
+    width: 100%;
+    max-width: none;
+    min-height: 720px;
+    margin: 0;
+    overflow: hidden;
+    box-shadow: none;
+}
+
+.ns-wix-artboard > .canvas {
+    position: relative;
+    z-index: 1;
+}
+
+.ns-wix-artboard .mock-browser,
+.ns-wix-artboard.canvas > .mock-browser {
+    position: sticky;
+    top: 0;
+    z-index: 18;
+    height: 24px;
+    border-bottom: 1px solid #e0e2e5;
+    background: rgb(247 248 249 / 96%);
+    backdrop-filter: blur(8px);
+}
+
+.ns-wix-workspace .canvas-area {
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+}
+
+.ns-wix-workspace .device-switcher {
+    position: absolute;
+    z-index: 50;
+    top: 10px;
+    left: 50%;
+    margin: 0;
+    border-color: #cdd2d8;
+    border-radius: 7px;
+    box-shadow: 0 5px 18px rgb(20 27 38 / 12%);
+    transform: translateX(-50%);
+}
+
+/* Canvas editing chrome. Template layout itself remains untouched. */
+.ns-wix-artboard .builder-section {
+    isolation: isolate;
+}
+
+.ns-wix-artboard .builder-section:hover {
+    outline: 1px solid #58a0ff;
+    outline-offset: -1px;
+}
+
+.ns-wix-artboard .builder-section:focus-visible,
+.ns-wix-artboard .builder-section.section-selected {
+    z-index: 5;
+    outline: 2px solid var(--ns-wix-blue);
+    outline-offset: -2px;
+    box-shadow:
+        inset 0 0 0 1px rgb(255 255 255 / 78%),
+        0 0 0 1px var(--ns-wix-blue);
+}
+
+.ns-wix-artboard .builder-section.section-dragging {
+    opacity: 0.55;
+    outline: 2px dashed var(--ns-wix-blue);
+}
+
+.ns-wix-artboard .section-label {
+    top: 0;
+    left: 0;
+    z-index: 15;
+    min-height: 21px;
+    padding: 3px 7px;
+    border-radius: 0 0 4px 0;
+    color: white;
+    background: var(--ns-wix-blue);
+    box-shadow: 0 2px 5px rgb(17 109 255 / 18%);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.035em;
+}
+
+.ns-wix-artboard .section-tools {
+    top: 6px;
+    right: 7px;
+    z-index: 16;
+    padding: 3px;
+    border: 1px solid #d4d8dd;
+    border-radius: 6px;
+    color: #3d444c;
+    background: white;
+    box-shadow: 0 5px 16px rgb(20 27 38 / 18%);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: 8px;
+}
+
+.ns-wix-artboard .section-tools button {
+    min-height: 25px;
+    padding: 4px 7px;
+    border-radius: 4px;
+}
+
+.ns-wix-artboard .section-tools button:hover {
+    color: #075ed8;
+    background: var(--ns-wix-blue-soft);
+}
+
+.ns-wix-artboard .section-tools button:last-child:hover {
+    color: var(--ns-wix-danger);
+    background: #fff0ef;
+}
+
+/* Floating contextual toolbar ------------------------------------------ */
+
+.ns-wix-context-toolbar {
+    position: absolute;
+    z-index: 80;
+    top: 8px;
+    left: 50%;
+    display: flex;
+    min-height: 34px;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid #cbd0d7;
+    border-radius: 7px;
+    color: #33383f;
+    background: rgb(255 255 255 / 97%);
+    box-shadow:
+        0 2px 5px rgb(20 27 38 / 10%),
+        0 9px 28px rgb(20 27 38 / 16%);
+    backdrop-filter: blur(10px);
+    transform: translateX(-50%);
+    transform-origin: center top;
+    animation: ns-wix-toolbar-in 140ms ease-out both;
+}
+
+.ns-wix-context-toolbar__name {
+    display: inline-flex;
+    align-items: center;
+    max-width: 92px;
+    padding: 0 7px;
+    overflow: hidden;
+    color: #6e7680;
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: 0.06em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.ns-wix-context-toolbar__name::after {
+    display: inline-block;
+    width: 1px;
+    height: 16px;
+    margin-left: 8px;
+    background: var(--ns-wix-line);
+    content: "";
+}
+
+.ns-wix-context-toolbar button {
+    display: inline-flex;
+    min-width: 27px;
+    min-height: 27px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 0 7px;
+    border: 0;
+    border-radius: 4px;
+    color: inherit;
+    background: transparent;
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.ns-wix-context-toolbar button:hover {
+    color: #075ed8;
+    background: var(--ns-wix-blue-soft);
+}
+
+.ns-wix-context-toolbar button[aria-pressed="true"] {
+    color: white;
+    background: var(--ns-wix-blue);
+}
+
+.ns-wix-context-toolbar button:disabled {
+    opacity: 0.32;
+    cursor: not-allowed;
+}
+
+.ns-wix-context-toolbar button:last-of-type:hover {
+    color: var(--ns-wix-danger);
+    background: #fff0ef;
+}
+
+/* Bottom breadcrumb/status bar ----------------------------------------- */
+
+.ns-wix-statusbar {
+    position: relative;
+    z-index: 45;
+    display: flex;
+    min-width: 0;
+    grid-column: 1;
+    grid-row: 3;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 10px;
+    border-top: 1px solid var(--ns-wix-line);
+    color: #666d75;
+    background: rgb(255 255 255 / 97%);
+    box-shadow: 0 -2px 8px rgb(20 27 38 / 4%);
+    font-size: 9px;
+    user-select: none;
+}
+
+.ns-wix-statusbar__meta {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
+}
+
+.ns-wix-statusbar__meta a {
+    color: #075ed8;
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.ns-wix-statusbar__meta > * + * {
+    position: relative;
+    padding-left: 12px;
+}
+
+.ns-wix-statusbar__meta > * + *::before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 1px;
+    height: 10px;
+    background: var(--ns-wix-line);
+    content: "";
+    transform: translateY(-50%);
+}
+
+.ns-wix-breadcrumb {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 4px;
+    overflow: hidden;
+}
+
+.ns-wix-breadcrumb > * {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ns-wix-breadcrumb > * + *::before {
+    content: none;
+}
+
+.ns-wix-breadcrumb > i {
+    color: #a0a6ae;
+    font-style: normal;
+}
+
+.ns-wix-breadcrumb button,
+.ns-wix-breadcrumb a {
+    border: 0;
+    color: inherit;
+    background: transparent;
+}
+
+.ns-wix-breadcrumb button:hover,
+.ns-wix-breadcrumb a:hover {
+    color: var(--ns-wix-blue);
+}
+
+/* Preview mode ---------------------------------------------------------- */
+
+:where(.ns-wix-shell, .ns-wix-studio).is-previewing .ns-wix-body {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+}
+
+:where(.ns-wix-shell, .ns-wix-studio).is-previewing {
+    --ns-wix-status-height: 0px;
+}
+
+:where(.ns-wix-shell, .ns-wix-studio).is-previewing
+    :is(
+        .ns-wix-tool-rail,
+        .ns-wix-sidebar,
+        .ns-wix-inspector,
+        .ns-wix-statusbar,
+        .ns-wix-context-toolbar,
+        .section-label,
+        .section-tools
+    ) {
+    display: none;
+}
+
+:where(.ns-wix-shell, .ns-wix-studio).is-previewing .ns-wix-workspace {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+:where(.ns-wix-shell, .ns-wix-studio).is-previewing .ns-wix-canvas-stage {
+    padding-top: 36px;
+}
+
+:where(.ns-wix-shell, .ns-wix-studio).is-previewing .ns-wix-artboard::before,
+:where(.ns-wix-shell, .ns-wix-studio).is-previewing .ns-wix-artboard::after {
+    display: none;
+}
+
+/* Accessible interaction states ---------------------------------------- */
+
+:where(.ns-wix-shell, .ns-wix-studio)
+    :is(button, a, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid var(--ns-wix-blue);
+    outline-offset: 2px;
+}
+
+.ns-wix-topbar
+    :is(button, a, input, textarea, select, [tabindex]):focus-visible {
+    outline-color: #7db1ff;
+}
+
+.ns-wix-sidebar :is(input, textarea, select):focus,
+.ns-wix-inspector :is(input, textarea, select):focus {
+    border-color: var(--ns-wix-blue);
+    outline: 0;
+    box-shadow: 0 0 0 2px rgb(17 109 255 / 16%);
+}
+
+@keyframes ns-wix-spin {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes ns-wix-toolbar-in {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -4px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+/* Keep a scaled desktop canvas useful on laptop-size editor windows. The
+   contextual inspector becomes an overlay before it can squeeze the stage. */
+@media (max-width: 1180px) {
+    :where(.ns-wix-shell, .ns-wix-studio) {
+        --ns-wix-sidebar-width: 280px;
+        --ns-wix-inspector-width: 270px;
+    }
+
+    .ns-wix-topbar {
+        grid-template-columns: minmax(220px, 1fr) auto minmax(220px, 1fr);
+    }
+}
+
+@media (max-width: 1740px) {
+    :where(.ns-wix-shell, .ns-wix-studio) {
+        --ns-wix-sidebar-width: 270px;
+    }
+
+    .ns-wix-body {
+        grid-template-columns:
+            var(--ns-wix-rail-width) var(--ns-wix-sidebar-width)
+            minmax(280px, 1fr);
+    }
+
+    .ns-wix-inspector {
+        position: absolute;
+        z-index: 70;
+        top: 0;
+        right: 0;
+        bottom: var(--ns-wix-status-height);
+        display: none;
+        width: min(300px, calc(100vw - 60px));
+        box-shadow: -12px 0 32px rgb(20 27 38 / 17%);
+    }
+
+    .ns-wix-inspector.is-open,
+    .ns-wix-inspector[data-open="true"] {
+        display: grid;
+    }
+
+    .ns-wix-workspace {
+        grid-column: 3;
+    }
+
+    .ns-wix-topbar {
+        grid-template-columns: minmax(190px, 1fr) auto minmax(190px, 1fr);
+        gap: 5px;
+    }
+
+    .ns-wix-site-name {
+        max-width: 150px;
+    }
+
+    .ns-wix-save-state {
+        display: none;
+    }
+
+    .ns-wix-canvas-stage {
+        padding-inline: 44px;
+    }
+}
+
+@media (max-width: 760px) {
+    :where(.ns-wix-shell, .ns-wix-studio) {
+        --ns-wix-topbar-height: 44px;
+        --ns-wix-status-height: 0px;
+        height: auto;
+        min-height: 100dvh;
+        grid-template-rows:
+            var(--ns-wix-topbar-height)
+            minmax(calc(100dvh - var(--ns-wix-topbar-height)), auto) 0;
+        overflow: auto;
+    }
+
+    .ns-wix-topbar {
+        position: sticky;
+        top: 0;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 4px;
+        padding-inline: 6px;
+    }
+
+    .ns-wix-topbar__center {
+        display: none;
+    }
+
+    .ns-wix-topbar__right {
+        grid-column: 2;
+    }
+
+    .ns-wix-site-name {
+        max-width: min(34vw, 140px);
+        padding-inline: 4px;
+    }
+
+    .ns-wix-site-name span,
+    .ns-wix-site-name small,
+    .ns-wix-page-picker,
+    .ns-wix-breakpoints,
+    .ns-wix-zoom,
+    .ns-wix-topbar .button-ghost {
+        display: none;
+    }
+
+    .ns-wix-topbar .button,
+    .ns-wix-topbar [data-variant="primary"] {
+        padding-inline: 9px;
+        font-size: 9px;
+    }
+
+    .ns-wix-body {
+        min-height: calc(100dvh - var(--ns-wix-topbar-height));
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: minmax(0, 1fr) 52px;
+        overflow: visible;
+    }
+
+    .ns-wix-tool-rail {
+        position: sticky;
+        z-index: 85;
+        bottom: 0;
+        display: flex;
+        width: 100%;
+        height: 52px;
+        grid-column: 1;
+        grid-row: 2;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 1px;
+        padding: 3px 5px;
+        overflow-x: auto;
+        border-top: 1px solid var(--ns-wix-line);
+        border-right: 0;
+        background: rgb(255 255 255 / 98%);
+        box-shadow: 0 -7px 22px rgb(20 27 38 / 9%);
+    }
+
+    .ns-wix-tool-rail::after {
+        display: none;
+    }
+
+    .ns-wix-tool-button {
+        width: min(54px, 16vw);
+        min-width: 42px;
+        height: 44px;
+        min-height: 44px;
+    }
+
+    .ns-wix-tool-button.is-active::before,
+    .ns-wix-tool-button[aria-pressed="true"]::before,
+    .ns-wix-tool-button[aria-selected="true"]::before {
+        inset: auto 8px -3px;
+        width: auto;
+        height: 3px;
+        border-radius: 3px 3px 0 0;
+    }
+
+    .ns-wix-sidebar,
+    .ns-wix-inspector {
+        position: fixed;
+        z-index: 95;
+        top: var(--ns-wix-topbar-height);
+        right: auto;
+        bottom: 52px;
+        left: 0;
+        display: none;
+        width: min(330px, calc(100vw - 44px));
+        border-right: 1px solid var(--ns-wix-line);
+        border-left: 0;
+        box-shadow: 14px 0 36px rgb(20 27 38 / 22%);
+    }
+
+    .ns-wix-inspector {
+        right: 0;
+        left: auto;
+        border-right: 0;
+        border-left: 1px solid var(--ns-wix-line);
+        box-shadow: -14px 0 36px rgb(20 27 38 / 22%);
+    }
+
+    .ns-wix-sidebar.is-open,
+    .ns-wix-sidebar[data-open="true"],
+    .ns-wix-inspector.is-open,
+    .ns-wix-inspector[data-open="true"] {
+        display: grid;
+    }
+
+    .ns-wix-sidebar__close {
+        display: grid !important;
+    }
+
+    .ns-wix-workspace {
+        min-height: calc(100dvh - var(--ns-wix-topbar-height) - 52px);
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .ns-wix-canvas-stage {
+        min-height: inherit;
+        padding: 48px 32px 70px;
+    }
+
+    .ns-wix-artboard.desktop {
+        --ns-wix-canvas-width: 960px;
+    }
+
+    .ns-wix-artboard.tablet {
+        --ns-wix-canvas-width: 720px;
+    }
+
+    .ns-wix-artboard.mobile {
+        --ns-wix-canvas-width: min(390px, calc(100vw - 72px));
+    }
+
+    .ns-wix-statusbar {
+        display: none;
+    }
+
+    .ns-wix-context-toolbar {
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        bottom: auto;
+        left: 10px !important;
+        width: auto;
+        justify-content: center;
+        transform: none;
+        animation: none;
+    }
+
+    :where(.ns-wix-shell, .ns-wix-studio).is-previewing .ns-wix-body {
+        display: block;
+        min-height: calc(100dvh - var(--ns-wix-topbar-height));
+    }
+}
+
+@media (max-width: 420px) {
+    .ns-wix-brand-button {
+        width: 29px;
+        height: 29px;
+    }
+
+    .ns-wix-site-name {
+        max-width: 30vw;
+    }
+
+    .ns-wix-artboard.mobile {
+        --ns-wix-canvas-width: calc(100vw - 42px);
+    }
+
+    .ns-wix-canvas-stage {
+        padding-inline: 20px;
+    }
+
+    .ns-wix-artboard::before,
+    .ns-wix-artboard::after {
+        display: none;
+    }
+}
+
+@media (prefers-contrast: more) {
+    :where(.ns-wix-shell, .ns-wix-studio) {
+        --ns-wix-line: #a6acb4;
+        --ns-wix-line-strong: #747b84;
+    }
+
+    .ns-wix-tool-button.is-active,
+    .ns-wix-tool-button[aria-pressed="true"],
+    .ns-wix-tool-button[aria-selected="true"] {
+        outline: 2px solid var(--ns-wix-blue);
+        outline-offset: -2px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :where(.ns-wix-shell, .ns-wix-studio) *,
+    :where(.ns-wix-shell, .ns-wix-studio) *::before,
+    :where(.ns-wix-shell, .ns-wix-studio) *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

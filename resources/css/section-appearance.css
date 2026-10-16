@@ -1,0 +1,283 @@
+.appearance-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    color: #334155;
+}
+.appearance-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+.appearance-heading h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 800;
+    color: #17201e;
+}
+.appearance-heading p,
+.appearance-hint {
+    margin: 4px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #64748b;
+}
+.appearance-reset,
+.appearance-color > button {
+    flex-shrink: 0;
+    border: 0;
+    background: transparent;
+    padding: 4px 0;
+    color: #047857;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.appearance-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 700;
+}
+.appearance-choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.appearance-choices > button,
+.appearance-shapes > button {
+    padding: 8px 12px;
+    border: 1px solid #dbe4df;
+    border-radius: 9px;
+    background: white;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 650;
+}
+.appearance-choices > button:hover,
+.appearance-shapes > button:hover {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+.appearance-choices > button[aria-pressed="true"],
+.appearance-shapes > button[aria-pressed="true"] {
+    border-color: #059669;
+    background: #ecfdf5;
+    box-shadow: 0 0 0 1px #059669;
+    color: #065f46;
+}
+.appearance-controls button:focus-visible,
+.appearance-controls input:focus-visible {
+    outline: 3px solid #34d399;
+    outline-offset: 3px;
+}
+.appearance-color {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    gap: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: white;
+}
+.appearance-color label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+.appearance-color input[type="color"] {
+    width: 36px;
+    height: 36px;
+    padding: 3px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+}
+.appearance-color b,
+.appearance-color small {
+    display: block;
+    font-size: 12px;
+}
+.appearance-color small {
+    margin-top: 2px;
+    font-size: 10px;
+    color: #64748b;
+}
+.appearance-two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.appearance-range span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 12px;
+}
+.appearance-range output {
+    padding: 3px 6px;
+    border-radius: 6px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 11px;
+}
+.appearance-range input {
+    width: 100%;
+    margin-top: 12px;
+    accent-color: #059669;
+}
+.appearance-shapes {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 7px;
+}
+.appearance-shapes > button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 4px 8px;
+    font-size: 10px;
+}
+.appearance-shape {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(145deg, #6ee7b7, #0f766e);
+}
+.appearance-shape-rounded {
+    border-radius: 8px;
+}
+.appearance-shape-circle {
+    border-radius: 50%;
+}
+.appearance-shape-arch {
+    border-radius: 50% 50% 0 0;
+}
+.appearance-shape-diamond {
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+.appearance-image-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    min-height: 100px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+.appearance-image-preview img {
+    display: block;
+    width: min(100%, 220px);
+    height: auto;
+    max-height: 280px;
+    object-fit: cover;
+}
+.appearance-section-preview {
+    padding: 24px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    text-align: center;
+}
+.appearance-section-preview strong {
+    font-size: 18px;
+}
+.appearance-section-preview p {
+    margin: 6px 0 0;
+    font-size: 11px;
+}
+.has-section-decoration {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+.section-decoration {
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    right: -6%;
+    top: -10%;
+    width: min(52%, 540px);
+    aspect-ratio: 1;
+    opacity: 0.16;
+    color: var(
+        --section-decoration-color,
+        var(--accent, var(--site-accent, #10b981))
+    );
+    background: currentColor;
+}
+.section-decoration-circle {
+    border-radius: 50%;
+}
+.section-decoration-arch {
+    border-radius: 50% 50% 0 0;
+    top: auto;
+    bottom: -8%;
+    right: 3%;
+    transform: rotate(-15deg);
+}
+.section-decoration-diagonal {
+    top: -50%;
+    right: -12%;
+    width: 44%;
+    height: 200%;
+    aspect-ratio: auto;
+    transform: rotate(25deg);
+}
+.section-align-left > :is(h1, h2, .lead, .public-section-image),
+.section-align-left > div > :is(h1, h2, .lead, .public-section-image) {
+    margin-inline: 0 auto;
+}
+.section-align-center > :is(h1, h2, .lead, .public-section-image),
+.section-align-center > div > :is(h1, h2, .lead, .public-section-image) {
+    margin-inline: auto;
+}
+.section-align-right > :is(h1, h2, .lead, .public-section-image),
+.section-align-right > div > :is(h1, h2, .lead, .public-section-image) {
+    margin-inline: auto 0;
+}
+.section-align-left .public-hero-actions {
+    justify-content: flex-start;
+}
+.section-align-center .public-hero-actions {
+    justify-content: center;
+}
+.section-align-right .public-hero-actions {
+    justify-content: flex-end;
+}
+.public-feature-grid .public-item-photo {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    margin-bottom: 16px;
+}
+.public-map-card.has-custom-image {
+    height: auto;
+    min-height: 0;
+    align-self: center;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+}
+.public-map-card.has-custom-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+@media (max-width: 480px) {
+    .appearance-heading {
+        flex-direction: column;
+    }
+    .appearance-two-columns {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+}

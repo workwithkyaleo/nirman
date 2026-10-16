@@ -1,0 +1,316 @@
+.text-format--friendly {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px;
+    background: #f8fafc;
+}
+.text-format--friendly .text-format__header,
+.text-format--friendly .text-format__panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.text-format--friendly .text-format__label {
+    margin: 0;
+    color: #334155;
+    font-size: 13px;
+}
+.section-editor .text-format--friendly .text-format__reset {
+    min-height: 28px;
+    font-size: 12px;
+    padding: 3px 6px;
+    color: #64748b;
+}
+.text-format--friendly .text-format__bar {
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+    box-shadow: none;
+}
+.section-editor .text-format--friendly .text-format__font {
+    flex: 1 1 140px;
+    padding: 5px 9px;
+}
+.text-format--friendly .text-format__font > span:first-child {
+    display: grid;
+    gap: 2px;
+}
+.text-format--friendly .text-format__font small {
+    color: #64748b;
+    font-family: system-ui, sans-serif;
+    font-size: 10px;
+}
+.section-editor .text-format--friendly .text-format__color {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+}
+.text-format--friendly .text-format__color i {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #cbd5e1;
+}
+.text-format--friendly .text-format__color span {
+    font-size: 12px;
+    font-weight: 500;
+}
+.section-editor .text-format--friendly .text-format__menu {
+    font-size: 12px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.section-editor .text-format--friendly button[aria-expanded="true"] {
+    background: #ede9fe;
+    color: #6d28d9;
+}
+.text-format--friendly .text-format__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.text-format--friendly .text-format__bar .text-format__toggle-name {
+    display: none;
+}
+.text-format--friendly .text-format__toggle-name {
+    font-weight: 500;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 12px;
+}
+.text-format--friendly .text-format__strikethrough > span:first-child {
+    text-decoration: line-through;
+}
+.text-format--friendly .text-format__help {
+    margin: 7px 0 0;
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.5;
+}
+.text-format--friendly .text-format__panel {
+    position: static;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: none;
+}
+.text-format--friendly .text-format__panel-header {
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+.section-editor .text-format--friendly .text-format__panel-header button {
+    min-height: 28px;
+    padding: 4px 8px;
+}
+.section-editor .text-format--friendly .text-format__theme-choice {
+    margin: 7px 0;
+    font-size: 12px;
+    background: #f1f5f9;
+}
+.text-format--friendly .text-format__fonts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+    max-height: 230px;
+}
+.section-editor .text-format--friendly .text-format__choice {
+    min-width: 0;
+    font-size: 13px;
+    line-height: 1.5;
+}
+.text-format--friendly .text-format__presets {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+}
+.section-editor .text-format--friendly .text-format__preset {
+    position: relative;
+    display: grid;
+    gap: 4px;
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+.text-format--friendly .text-format__preset-name {
+    font-size: 20px;
+}
+.text-format--friendly .text-format__preset small {
+    color: #64748b;
+    font-size: 11px;
+}
+.text-format--friendly .text-format__preset-size {
+    color: #64748b;
+    font-size: 10px;
+}
+.text-format--friendly .text-format__measurements {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+.section-editor .text-format--friendly .text-format__measurements label {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    font-size: 11px;
+    color: #475569;
+}
+.section-editor .text-format--friendly .text-format__measurements input {
+    margin: 0;
+    width: 100%;
+    min-width: 0;
+    padding: 7px;
+    font-size: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+}
+.text-format--friendly .text-format__setting {
+    margin: 14px 0 0;
+    padding: 0;
+    border: 0;
+}
+.text-format--friendly .text-format__setting legend {
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
+}
+.text-format--friendly .text-format__segments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.section-editor .text-format--friendly .text-format__segments button {
+    border: 1px solid #e2e8f0;
+    font-size: 12px;
+    padding: 5px 9px;
+    min-height: 32px;
+}
+.section-editor .text-format--friendly .text-format__custom {
+    font-size: 12px;
+    gap: 8px;
+}
+.text-format--friendly .text-format__custom > span {
+    margin-left: auto;
+    font-family: ui-monospace, monospace;
+    color: #64748b;
+}
+.text-format--friendly .text-format__empty {
+    padding: 10px;
+    font-size: 12px;
+}
+@media (max-width: 480px) {
+    .text-format--friendly {
+        padding: 9px;
+    }
+    .text-format--friendly .text-format__fonts {
+        grid-template-columns: 1fr;
+    }
+    .text-format--friendly .text-format__measurements {
+        gap: 6px;
+    }
+    .text-format--friendly .text-format__measurements label {
+        font-size: 10px;
+    }
+    .text-format--friendly .text-format__divider {
+        display: none;
+    }
+}
+
+.text-animation-controls {
+    display: grid;
+    gap: 14px;
+}
+.text-animation-choices {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+.section-editor .text-format .text-animation-choice {
+    display: grid;
+    justify-items: start;
+    gap: 5px;
+    min-width: 0;
+    padding: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    text-align: left;
+}
+.section-editor .text-format .text-animation-choice[aria-pressed="true"] {
+    border-color: #a78bfa;
+    background: #ede9fe;
+}
+.text-animation-choice__icon {
+    display: block;
+    font-weight: 700;
+    font-size: 22px;
+    color: #7c3aed;
+}
+.text-animation-choice__icon--fade {
+    opacity: 0.5;
+}
+.text-animation-choice__icon--rise {
+    border-bottom: 2px solid #c4b5fd;
+}
+.text-animation-choice__icon--slide {
+    border-left: 2px solid #c4b5fd;
+    padding-left: 5px;
+}
+.text-animation-choice__icon--zoom {
+    letter-spacing: -2px;
+}
+.text-animation-choice__icon--blur {
+    text-shadow: 2px 0 5px #a78bfa;
+}
+.text-animation-choice strong {
+    font-size: 12px;
+}
+.text-animation-choice small {
+    color: #64748b;
+    font-size: 10px;
+    line-height: 1.5;
+}
+.text-animation-preview {
+    background: #f5f3ff;
+    border-radius: 10px;
+    padding: 14px;
+    overflow: hidden;
+    text-align: center;
+}
+.text-animation-preview > span {
+    font-size: 10px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.text-animation-preview > div {
+    padding: 18px 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+.section-editor .text-animation-range {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-weight: 600;
+}
+.text-animation-range span {
+    margin-left: auto;
+    color: #64748b;
+    font-weight: 400;
+}
+.section-editor .text-animation-range input {
+    flex-basis: 100%;
+    width: 100%;
+    padding: 0;
+    accent-color: #7c3aed;
+}
+@media (max-width: 480px) {
+    .text-animation-choices {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
