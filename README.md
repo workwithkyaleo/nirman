@@ -38,3 +38,4 @@ See [PLAN.md](PLAN.md) for the architecture, security boundaries and milestone s
 ## Technology
 
 Nirmaan is built with Laravel, Inertia, React, TypeScript, Tailwind CSS and Vite. Customer content remains structured and tenant-scoped; arbitrary customer-authored HTML or JavaScript is never rendered.
+# nirman
