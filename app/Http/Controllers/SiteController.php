@@ -21,8 +21,10 @@ class SiteController extends Controller
         return Inertia::render('Dashboard', ['sites' => $sites]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $selectedTemplateId = $request->integer('template');
+
         return Inertia::render('Onboarding/Create', [
             'templates' => Template::where('is_active', true)->orderBy('id')->get()->map(fn (Template $template) => [
                 'id' => $template->id,
@@ -33,6 +35,9 @@ class SiteController extends Controller
                 'sections' => data_get($template->blueprint, 'home_sections', []),
                 'theme' => $template->theme_defaults,
             ]),
+            'selectedTemplateId' => Template::where('is_active', true)->whereKey($selectedTemplateId)->exists()
+                ? $selectedTemplateId
+                : null,
         ]);
     }
 

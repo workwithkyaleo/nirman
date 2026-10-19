@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { PageProps } from "@/types";
 import { Head, Link } from "@inertiajs/react";
 import "../../css/marketing.css";
@@ -8,6 +8,7 @@ const Arrow = () => <span aria-hidden="true">→</span>;
 export default function Welcome({ auth, brand }: PageProps) {
     const primaryHref = auth.user ? route("dashboard") : route("register");
     const productName = brand?.name || "SiteSajilo";
+    const heroScene = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -49,6 +50,39 @@ export default function Welcome({ auth, brand }: PageProps) {
         };
     }, []);
 
+    useEffect(() => {
+        const scene = heroScene.current;
+        if (!scene || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        let frame = 0;
+        let x = 0;
+        let y = 0;
+        const render = () => {
+            frame = 0;
+            scene.style.setProperty("--ss-pointer-x", x.toFixed(3));
+            scene.style.setProperty("--ss-pointer-y", y.toFixed(3));
+        };
+        const move = (event: PointerEvent) => {
+            const bounds = scene.getBoundingClientRect();
+            x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 2;
+            y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 2;
+            if (!frame) frame = requestAnimationFrame(render);
+        };
+        const leave = () => {
+            x = 0;
+            y = 0;
+            if (!frame) frame = requestAnimationFrame(render);
+        };
+
+        scene.addEventListener("pointermove", move);
+        scene.addEventListener("pointerleave", leave);
+        return () => {
+            cancelAnimationFrame(frame);
+            scene.removeEventListener("pointermove", move);
+            scene.removeEventListener("pointerleave", leave);
+        };
+    }, []);
+
     return (
         <>
             <Head title={`${productName} — Create a website that means business`}>
@@ -74,6 +108,7 @@ export default function Welcome({ auth, brand }: PageProps) {
                         <p className="ss-hero-copy">Build a beautiful website, run your store and grow your business—all from one powerful place.</p>
                         <Link className="ss-button ss-button-hero" href={primaryHref}>Start Creating <Arrow /></Link>
                         <p className="ss-fineprint">Start free. No credit card required.</p>
+                        <div ref={heroScene} className="ss-hero-scene">
                         <div className="ss-stage" data-parallax-speed="-0.035" aria-label="A visual preview of the SiteSajilo website builder">
                             <div className="ss-toolbar"><span className="ss-mini-logo">LUMA</span><span>Pages</span><span>Design</span><span>Store</span><span className="ss-toolbar-grow" /><span>↶</span><span>↷</span><button>Publish</button></div>
                             <aside className="ss-tools"><span>＋</span><span>◫</span><span>◉</span><span>☷</span><span>♧</span></aside>
@@ -85,6 +120,7 @@ export default function Welcome({ auth, brand }: PageProps) {
                             <div className="ss-selection" data-parallax-speed="0.08"><b>Heading</b><span>✦</span><span>B</span><span>↗</span></div>
                             <div className="ss-sticker" data-parallax-speed="-0.13">Designed<br />by you <b>✦</b></div>
                         </div>
+                        </div>
                     </section>
 
                     <section className="ss-proof"><p>ONE PLATFORM. EVERY POSSIBILITY.</p><div><span><b>Sites</b> built with ease</span><span><b>Store</b> ready from day one</span><span><b>Tools</b> that grow with you</span></div></section>
@@ -92,7 +128,7 @@ export default function Welcome({ auth, brand }: PageProps) {
 
                     <section className="ss-solution-grid" id="templates">
                         <article className="ss-solution ss-store"><div className="ss-card-art"><div className="ss-product-card"><i>NEW<br />ARRIVAL</i><b>Studio<br />essentials</b><span>Explore now →</span></div></div><p>SELL ONLINE</p><h3>Everything for your store</h3><span>Products, inventory, checkout and orders—beautifully connected.</span><a href={primaryHref}>Build your store <Arrow /></a></article>
-                        <article className="ss-solution ss-design"><div className="ss-card-art"><div className="ss-type-card"><b>Make it<br /><em>yours.</em></b><span>TYPE &nbsp; COLOR &nbsp; MOTION</span></div></div><p>DESIGN FREELY</p><h3>Start with a spark</h3><span>Choose a polished template, then personalize every detail.</span><a href={primaryHref}>Explore templates <Arrow /></a></article>
+                        <article className="ss-solution ss-design"><div className="ss-card-art"><div className="ss-type-card"><b>Make it<br /><em>yours.</em></b><span>TYPE &nbsp; COLOR &nbsp; MOTION</span></div></div><p>DESIGN FREELY</p><h3>Start with a spark</h3><span>Choose a polished template, then personalize every detail.</span><Link href={route("templates.index")}>Explore templates <Arrow /></Link></article>
                         <article className="ss-solution ss-grow"><div className="ss-card-art"><div className="ss-chart"><span>Sales this month</span><b>Rs. 84,200</b><i>↗ 24%</i><svg viewBox="0 0 300 85"><path d="M0 72 C35 59 45 66 78 49 S115 58 142 34 S181 48 205 28 S250 35 300 4" /></svg></div></div><p>GROW WITH CLARITY</p><h3>Know what’s working</h3><span>Make smarter decisions with your sales and customer activity in one view.</span><a href={primaryHref}>See your dashboard <Arrow /></a></article>
                     </section>
 

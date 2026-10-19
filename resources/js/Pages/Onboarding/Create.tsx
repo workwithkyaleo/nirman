@@ -34,10 +34,14 @@ type TemplateOption = {
 
 export default function Create({
     templates = [],
+    selectedTemplateId = null,
 }: {
     templates?: TemplateOption[];
+    selectedTemplateId?: number | null;
 }) {
-    const initialTemplate = templates[0];
+    const initialTemplate =
+        templates.find((template) => template.id === selectedTemplateId) ??
+        templates[0];
     const [step, setStep] = useState(0);
     const [stepError, setStepError] = useState("");
     const form = useForm<any>({

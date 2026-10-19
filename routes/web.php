@@ -10,6 +10,7 @@ use App\Http\Controllers\SiteAdminController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SiteDraftPreviewController;
 use App\Http\Controllers\StorefrontController;
+use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,6 +20,7 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
     ]);
 });
+Route::get('/templates', [TemplateController::class, 'index'])->name('templates.index');
 
 Route::get('/dashboard', [SiteController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 

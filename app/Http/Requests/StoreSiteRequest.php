@@ -7,6 +7,15 @@ use Illuminate\Validation\Rule;
 
 class StoreSiteRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        // The studio defaults a business to one company. Keep direct form
+        // submissions aligned with that safe default as well.
+        if ($this->input('type') === 'business' && ! $this->filled('company_count')) {
+            $this->merge(['company_count' => 1]);
+        }
+    }
+
     public function authorize(): bool
     {
         return true;
