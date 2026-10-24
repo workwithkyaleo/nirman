@@ -16,9 +16,29 @@ class SiteController extends Controller
 {
     public function dashboard(Request $r)
     {
-        $sites = $r->user()->sites()->withCount(['products', 'orders'])->get();
+        $sites = $r->user()->sites()
+            ->withCount(['products', 'orders', 'pages'])
+            ->with(['theme', 'template'])
+            ->latest('updated_at')
+            ->get();
 
-        return Inertia::render('Dashboard', ['sites' => $sites]);
+        $templates = Template::where('is_active', true)
+            ->orderBy('id')
+            ->get()
+            ->map(fn (Template $template) => [
+                'id'          => $template->id,
+                'name'        => $template->name,
+                'slug'        => $template->slug,
+                'category'    => $template->category,
+                'description' => data_get($template->blueprint, 'description', $template->category . ' website'),
+                'sections'    => data_get($template->blueprint, 'home_sections', []),
+                'theme'       => $template->theme_defaults,
+            ]);
+
+        return Inertia::render('Dashboard', [
+            'sites'     => $sites,
+            'templates' => $templates,
+        ]);
     }
 
     public function create(Request $request)

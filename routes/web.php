@@ -9,6 +9,7 @@ use App\Http\Controllers\PublicSiteController;
 use App\Http\Controllers\SiteAdminController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SiteDraftPreviewController;
+use App\Http\Controllers\SiteSettingsController;
 use App\Http\Controllers\StorefrontController;
 use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/sites/{site}/ai-refinements/{generation}', [BuilderController::class, 'destroyAiRefinement'])->name('ai.refinements.destroy');
     Route::post('/sites/{site}/publish', [BuilderController::class, 'publish'])->name('sites.publish');
     Route::get('/sites/{site}/commerce', [CommerceHubController::class, 'show'])->name('commerce.hub');
+    // Site Settings
+    Route::get('/sites/{site}/settings', [SiteSettingsController::class, 'show'])->name('sites.settings');
+    Route::patch('/sites/{site}/settings', [SiteSettingsController::class, 'update'])->name('sites.settings.update');
+    Route::post('/sites/{site}/settings/logo', [SiteSettingsController::class, 'uploadLogo'])->name('sites.settings.logo');
+
     Route::get('/sites/{site}/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/sites/{site}/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::patch('/sites/{site}/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.status.update');
